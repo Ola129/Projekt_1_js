@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style/reset.css" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <main class="main-container">
+      <section class="logo-container">
+        <h1 class="logo">DOMOWY BUDŻET</h1>
+      </section>
+      <div class="balance">Saldo =</div>
+      <div class="balance-compare">
+        <div class="income">
+          <p class="paragraf">PRZYCHODY</p>
+          <div class="add-new">
+            <input type="text" class="input1" placeholder="nazwa wydatku" />
+            <input type="number" class="input2" placeholder="kwota" />
+            <button onclick="addItem()" class="btn">Dodaj</button>
+            <ul id="itemList"></ul>
+          </div>
+          <p class="income-sum">Suma przychodów:</p>
+        </div>
+        <div class="expense">
+          <p class="paragraf">WYDATKI</p>
+          <div class="add-new">
+            <input type="text" class="input1" placeholder="nazwa wydatku" />
+            <input type="number" class="input2" placeholder="kwota" />
+            <button onclick="addItem()" class="btn">Dodaj</button>
+            <ul id="itemList"></ul>
+          </div>
+          <p class="expense-sum">Suma wydatków:</p>
+        </div>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
