@@ -24,30 +24,36 @@ function update() {
 function updateList(id, items) {
   const list = document.getElementById(id);
   list.innerHTML = "";
-  items.forEach((item, index) => {
-    const li = document.createElement("li");
-    li.textContent = `${item.name}: ${item.amount.toFixed(2)} PLN`;
-    const editButton = document.createElement("button");
-    editButton.textContent = "Edytuj";
-    editButton.addEventListener("click", function () {
-      const newName = prompt("Podaj nową nazwę:", item.name);
-      const newAmount = parseFloat(prompt("Podaj nową kwotę:", item.amount));
-      if (newName !== null && !isNaN(newAmount)) {
-        item.name = newName;
-        item.amount = newAmount;
+  items
+    .slice()
+    .reverse()
+    .forEach((item, index) => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name}: ${item.amount.toFixed(2)} PLN`;
+      li.classList.add("list-item");
+      const editButton = document.createElement("button");
+      editButton.textContent = "Edytuj";
+      editButton.classList.add("edit-button");
+      editButton.addEventListener("click", function () {
+        const newName = prompt("Podaj nową nazwę:", item.name);
+        const newAmount = parseFloat(prompt("Podaj nową kwotę:", item.amount));
+        if (newName !== null && !isNaN(newAmount)) {
+          item.name = newName;
+          item.amount = newAmount;
+          update();
+        }
+      });
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Usuń";
+      deleteButton.classList.add("delete-button");
+      deleteButton.addEventListener("click", function () {
+        items.splice(index, 1);
         update();
-      }
+      });
+      li.appendChild(editButton);
+      li.appendChild(deleteButton);
+      list.appendChild(li);
     });
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Usuń";
-    deleteButton.addEventListener("click", function () {
-      items.splice(index, 1);
-      update();
-    });
-    li.appendChild(editButton);
-    li.appendChild(deleteButton);
-    list.appendChild(li);
-  });
 }
 
 function updateBalance() {

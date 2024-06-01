@@ -8,23 +8,46 @@
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
-    <body>
-      <h1>Budżet domowy</h1>
-      <form id="form">
-        <input type="text" id="name" placeholder="Nazwa" required>
-        <input type="number" id="amount" placeholder="Kwota" required>
-        <select id="type">
-          <option value="income">Przychód</option>
-          <option value="expense">Wydatek</option>
-        </select>
-        <button type="submit">Dodaj</button>
-      </form>
-      <h2>Przychody</h2>
-      <ul id="incomeList"></ul>
-      <h2>Wydatki</h2>
-      <ul id="expenseList"></ul>
-      <h2>Bilans</h2>
+    <h1 class="logo">Budżet domowy</h1>
+    <h2 class="bilans">
+      Saldo:
       <p id="balance"></p>
-      <script src="index.js"></script>
-    </body>
+    </h2>
+    <form id="form">
+      <input
+        class="input1"
+        type="text"
+        id="name"
+        placeholder="Nazwa"
+        required
+      />
+      <input
+        class="input2"
+        type="number"
+        id="amount"
+        placeholder="Kwota"
+        required
+      />
+      <select class="select-type" id="type">
+        <option value="income">Przychód</option>
+        <option value="expense">Wydatek</option>
+      </select>
+      <button class="btn" type="submit">Dodaj</button>
+    </form>
+    <section class="balance-compare">
+      <div class="income">
+        <h2 class="sectionHeading">
+          Przychody
+          <ul id="incomeList"></ul>
+        </h2>
+      </div>
+      <div class="expense">
+        <h2 class="sectionHeading">
+          Wydatki
+          <ul class="ul" id="expenseList"></ul>
+        </h2>
+      </div>
+    </section>
+    <script src="index.js"></script>
+  </body>
 </html>
