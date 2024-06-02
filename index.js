@@ -17,13 +17,17 @@ document.getElementById("form").addEventListener("submit", function (event) {
 });
 
 function update() {
-  updateList("incomeList", incomes);
-  updateList("expenseList", expenses);
+  updateList("incomeList", incomes, "totalIncome");
+  updateList("expenseList", expenses, "totalExpense");
   updateBalance();
+  if (incomes.length > 0 || expenses.length > 0) {
+    document.querySelector("h2.accountBalance").style.display = "block";
+  }
 }
-function updateList(id, items) {
+function updateList(id, items, totalId) {
   const list = document.getElementById(id);
   list.innerHTML = "";
+  let total = 0;
   items
     .slice()
     .reverse()
@@ -53,7 +57,11 @@ function updateList(id, items) {
       li.appendChild(editButton);
       li.appendChild(deleteButton);
       list.appendChild(li);
+      total += item.amount;
     });
+  document.getElementById(totalId).textContent = `Suma: ${total.toFixed(
+    2
+  )} PLN`;
 }
 
 function updateBalance() {
@@ -76,5 +84,5 @@ function updateBalance() {
   } else {
     balanceText = "Bilans wynosi zero";
   }
-  document.getElementById("balance").textContent = balanceText;
+  document.getElementById("accountBalance").textContent = balanceText;
 }

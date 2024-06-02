@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,9 +9,8 @@
   </head>
   <body>
     <h1 class="logo">Budżet domowy</h1>
-    <h2 class="bilans">
-      Saldo:
-      <p id="balance"></p>
+    <h2 class="accountBalance">
+      <p id="accountBalance"></p>
     </h2>
     <form id="form">
       <input
@@ -37,15 +36,17 @@
     <section class="balance-compare">
       <div class="income">
         <h2 class="sectionHeading">
-          Przychody
+          <p class="addType">Przychody</p>
           <ul id="incomeList"></ul>
         </h2>
+        <p class="sum" id="totalIncome">Suma</p>
       </div>
       <div class="expense">
         <h2 class="sectionHeading">
-          Wydatki
+          <p class="addType">Wydatki</p>
           <ul class="ul" id="expenseList"></ul>
         </h2>
+        <p class="sum" id="totalExpense">Suma</p>
       </div>
     </section>
     <script src="index.js"></script>
