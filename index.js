@@ -1,7 +1,8 @@
 "use strict";
 
-let incomes = [];
-let expenses = [];
+let incomes = JSON.parse(localStorage.getItem("incomes")) || [];
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+update();
 
 document.getElementById("form").addEventListener("submit", function (event) {
   event.preventDefault();
@@ -13,6 +14,8 @@ document.getElementById("form").addEventListener("submit", function (event) {
   } else {
     expenses.push({ name, amount });
   }
+  localStorage.setItem("incomes", JSON.stringify(incomes));
+  localStorage.setItem("expenses", JSON.stringify(expenses));
   update();
 });
 
@@ -52,6 +55,8 @@ function updateList(id, items, totalId) {
       deleteButton.classList.add("delete-button");
       deleteButton.addEventListener("click", function () {
         items.splice(index, 1);
+        localStorage.setItem("incomes", JSON.stringify(incomes));
+        localStorage.setItem("expenses", JSON.stringify(expenses));
         update();
       });
       li.appendChild(editButton);
