@@ -10,8 +10,6 @@ form.addEventListener("submit", function (event) {
   event.preventDefault();
   const nameInput = document.getElementById("name");
   const amountInput = document.getElementById("amount");
-  amountInput.setAttribute("min", "0.01");
-  amountInput.setAttribute("step", "0.01");
   const type = document.getElementById("type").value;
   const amount = parseFloat(amountInput.value);
   if (amount > 0) {
