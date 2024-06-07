@@ -1,34 +1,37 @@
 "use strict";
 
-let incomes = JSON.parse(localStorage.getItem("incomes")) || [];
-let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+const incomes = JSON.parse(localStorage.getItem("incomes")) || [];
+const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let currentItem = null;
 update();
 
-const form = document.querySelector("#btn").closest("form");
+const form = document.getElementById("mainForm");
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-  const nameInput = document.getElementById("name");
-  const amountInput = document.getElementById("amount");
-  const type = document.getElementById("type").value;
-  const amount = parseFloat(amountInput.value);
+  const name = event.target.name.value.trim();
+  const amount = parseFloat(event.target.amount.value);
+  const type = event.target.type.value;
+
+  if (name === "") {
+    alert("Nazwa nie może składać się tylko ze spacji");
+    return;
+  }
   if (amount > 0) {
     if (type === "income") {
       incomes.push({
-        name: nameInput.value,
+        name: name,
         amount: amount,
       });
     } else {
       expenses.push({
-        name: nameInput.value,
+        name: name,
         amount: amount,
       });
     }
-    localStorage.setItem("incomes", JSON.stringify(incomes));
-    localStorage.setItem("expenses", JSON.stringify(expenses));
+    saveData();
     update();
-    nameInput.value = "";
-    amountInput.value = "";
+    event.target.name.value = "";
+    event.target.amount.value = "";
   } else {
     alert("Kwota musi być większa od 0!");
   }
@@ -38,13 +41,14 @@ document
   .getElementById("modalForm")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    const newName = document.getElementById("modalName").value;
-    const newAmount = parseFloat(document.getElementById("modalAmount").value);
-    if (newName !== null && newAmount > 0) {
+    const newName = event.target.modalName.value.trim();
+    const newAmount = parseFloat(event.target.modalAmount.value);
+    if (newName !== "" && newAmount > 0) {
       currentItem.name = newName;
       currentItem.amount = newAmount;
+      saveData();
       update();
-      document.getElementById("modal").style.display = "none";
+      document.getElementById("modal").classList.add("hide");
     } else {
       alert("Kwota musi być większa od 0");
     }
@@ -55,9 +59,10 @@ function update() {
   updateList("expenseList", expenses, "totalExpense");
   updateBalance();
   if (incomes.length > 0 || expenses.length > 0) {
-    document.getElementById("accountBalance").style.display = "block";
+    document.getElementById("accountBalance").classList.remove("hide");
   }
 }
+
 function updateList(id, items, totalId) {
   const list = document.getElementById(id);
   list.innerHTML = "";
@@ -71,7 +76,7 @@ function updateList(id, items, totalId) {
     editButton.classList.add("button");
     editButton.addEventListener("click", function () {
       currentItem = item;
-      document.getElementById("modal").style.display = "block";
+      document.getElementById("modal").classList.remove("hide");
       document.getElementById("modalName").value = item.name;
       document.getElementById("modalAmount").value = item.amount;
     });
@@ -80,8 +85,7 @@ function updateList(id, items, totalId) {
     deleteButton.classList.add("button");
     deleteButton.addEventListener("click", function () {
       items.splice(originalIndex, 1);
-      localStorage.setItem("incomes", JSON.stringify(incomes));
-      localStorage.setItem("expenses", JSON.stringify(expenses));
+      saveData();
       update();
     });
     li.appendChild(editButton);
@@ -115,4 +119,9 @@ function updateBalance() {
     balanceText = "Bilans wynosi zero";
   }
   document.getElementById("accountBalance").textContent = balanceText;
+}
+
+function saveData() {
+  localStorage.setItem("incomes", JSON.stringify(incomes));
+  localStorage.setItem("expenses", JSON.stringify(expenses));
 }

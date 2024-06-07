@@ -28,6 +28,9 @@ body {
   justify-content: center;
   border-radius: 10px;
 }
+.hide {
+  display: none;
+}
 .accountBalance {
   display: flex;
   color: black;
