@@ -5,62 +5,63 @@ const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 let currentItem = null;
 update();
 
-const form = document.getElementById("mainForm");
+const form = document.getElementById("myForm");
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-  const name = event.target.name.value.trim();
-  const amount = parseFloat(event.target.amount.value);
+  const nameInput = event.target.name.value;
+  const amountInput = event.target.amount.value;
   const type = event.target.type.value;
-
-  if (name === "") {
-    alert("Nazwa nie może składać się tylko ze spacji");
+  const amount = parseFloat(amountInput);
+  if (!nameInput.trim()) {
+    alert("Nazwa nie może być pusta!");
     return;
   }
-  if (amount > 0) {
-    if (type === "income") {
-      incomes.push({
-        name: name,
-        amount: amount,
-      });
-    } else {
-      expenses.push({
-        name: name,
-        amount: amount,
-      });
-    }
-    saveData();
-    update();
-    event.target.name.value = "";
-    event.target.amount.value = "";
-  } else {
+  if (!(amount > 0)) {
     alert("Kwota musi być większa od 0!");
+    return;
   }
+  if (type === "income") {
+    incomes.push({
+      name: nameInput,
+      amount: amount,
+    });
+  } else {
+    expenses.push({
+      name: nameInput,
+      amount: amount,
+    });
+  }
+  saveData();
+  update();
+  event.target.name.value = "";
+  event.target.amount.value = "";
 });
 
 document
   .getElementById("modalForm")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    const newName = event.target.modalName.value.trim();
+    const newName = event.target.modalName.value;
     const newAmount = parseFloat(event.target.modalAmount.value);
-    if (newName !== "" && newAmount > 0) {
-      currentItem.name = newName;
-      currentItem.amount = newAmount;
-      saveData();
-      update();
-      document.getElementById("modal").classList.add("hide");
-    } else {
-      alert("Kwota musi być większa od 0");
+    if (!newName.trim()) {
+      alert("Nazwa nie może być pusta!");
+      return;
     }
+    if (!(newAmount > 0)) {
+      alert("Kwota musi być większa od 0!");
+      return;
+    }
+    currentItem.name = newName;
+    currentItem.amount = newAmount;
+    saveData();
+    update();
+    document.getElementById("modal").classList.add("hide");
   });
 
 function update() {
   updateList("incomeList", incomes, "totalIncome");
   updateList("expenseList", expenses, "totalExpense");
   updateBalance();
-  if (incomes.length > 0 || expenses.length > 0) {
-    document.getElementById("accountBalance").classList.remove("hide");
-  }
 }
 
 function updateList(id, items, totalId) {
